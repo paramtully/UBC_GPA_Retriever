@@ -1,23 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+
+function Description() {
+  return (
+    <div>
+      // stub
+    </div>
+  )
+}
+
+function Interactable() {
+  const [loading, setLoading] = useState(false);
+  const [summary, setSummary] = useState(null);
+
+  return (
+    <div>
+      <Form loading={loading} setSummary={setSummary} />
+      <Result loading={loading} summary={summary} />
+    </div>
+  );
+}
+
+function Form({ loading, setSummary }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [session, setSession] = useState('');
+
+  const isSubmittable = username.length && password.length && !loading;
+
+   async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      // stub
+    } catch (error) {
+      // stub
+    }
+  }
+
+  return (
+    <form onSubmit={e => handleSubmit(e)}>
+      <input type='text' placeholder='username' value={username} onChange={e => setUsername(e.target.value)} />
+      <input type='text' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
+      <input type='text' placeholder='session' value={session} onChange={e => setSession(e.target.value)} />
+      <button disabled={!isSubmittable}>Get Grades</button>
+    </form>
+  );
+}
+
+function Result({loading, summary}) {
+  if (!summary && !loading) return <></>;
+  else if (loading) return <div>Loading...</div>;
+  else if (summary.error !== undefined) return <p style={{color: '#cc0000'}}> {summary.error} </p>;
+
+  return (
+    <>
+      <p>Your Grade Summary:</p>
+      <p>Average:{" " + summary.average}</p>
+      <p>GPA (4.0 Scale):{" " + summary.gpa4}</p>
+      <p>GPA (4.33 Scale):{" " + summary.gpa433}</p>
+    </>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>UBC Grade Retriever</h1>
+      <Description />
+      <Interactable />
     </div>
   );
 }
