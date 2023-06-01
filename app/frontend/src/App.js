@@ -53,7 +53,7 @@ function Form({ loading, setLoading, setSummary }) {
 
       response = await response.json();
     } catch (error) {
-      response = {error: error.message};
+      response = {error: 'Servers could not be reached...'};
     }
 
     setSummary(response);
@@ -61,7 +61,7 @@ function Form({ loading, setLoading, setSummary }) {
   }
 
   return (
-    <form onSubmit={e => handleSubmit(e)}>
+    <form onSubmit={e => handleSubmit(e)} >
       <input type='text' placeholder='username' value={username} onChange={e => setUsername(e.target.value)} />
       <input type='text' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
       <input type='text' placeholder='session' value={session} onChange={e => setSession(e.target.value)} />
@@ -76,12 +76,12 @@ function Result({loading, summary}) {
   else if (summary.error !== undefined) return <p style={{color: '#cc0000'}}> {summary.error} </p>;
 
   return (
-    <>
+    <div>
       <p>Your Grade Summary:</p>
       <p>Average:{" " + summary.average}</p>
       <p>GPA (4.0 Scale):{" " + summary.gpa4}</p>
       <p>GPA (4.33 Scale):{" " + summary.gpa433}</p>
-    </>
+    </div>
   );
 }
 
