@@ -3,7 +3,14 @@ import { useState } from 'react';
 function Description() {
   return (
     <div>
-      // stub
+      <p>This application uses your login information to retrieve your grade information from ssc and summarizes it in the form of:
+        <ol>
+          <li>Weighted Average</li>
+          <li>GPA (/4.0)</li>
+          <li>GPA (/4.33)</li>
+        </ol>
+      </p>
+      <p>You can optionally specify which session to summarize your grade information for in the same form as on ssc (ex 2022W or 2022S). Otherwise it will default to all completed academic sessions.</p>
     </div>
   )
 }
