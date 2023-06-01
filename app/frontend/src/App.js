@@ -14,13 +14,13 @@ function Interactable() {
 
   return (
     <div>
-      <Form loading={loading} setSummary={setSummary} />
+      <Form loading={loading} setLoading={setLoading} setSummary={setSummary} />
       <Result loading={loading} summary={summary} />
     </div>
   );
 }
 
-function Form({ loading, setSummary }) {
+function Form({ loading, setLoading, setSummary }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [session, setSession] = useState('');
@@ -28,12 +28,29 @@ function Form({ loading, setSummary }) {
   const isSubmittable = username.length && password.length && !loading;
 
    async function handleSubmit(e) {
+    setLoading(true);
     e.preventDefault();
+
+    const data = new FormData();
+    data.append('username', username);
+    data.append('password', password);
+    if (session.length) data.append('session', session);
+
+    let response = null;
+
     try {
-      // stub
+      response = await fetch('/summary', {
+        method: 'POST',
+        body: data
+      });
+
+      response = await response.json();
     } catch (error) {
-      // stub
+      response = {error: error.message};
     }
+
+    setSummary(response);
+    setLoading(false);
   }
 
   return (
